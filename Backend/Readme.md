@@ -9,6 +9,9 @@ This document provides details about the User API endpoints, models, and methods
 3. [Profile User](#Profile-User)
 4. [Logout User](#Logout-User)
 5. [Register Captain](#Register-captain)
+6. [Login Captain](#Login-Captain)
+7. [Profile Captain](#Profile-Captain)
+8. [Logout Captain](#Logout-Captain)
 
 ---
 
@@ -234,5 +237,120 @@ The request should be sent as a JSON object with the following structure:
     "_id": "675f40f27f18af568b5272c1",
     "__v": 0
   }
+}
+```
+
+## Login Captain
+
+### Endpoint
+
+`POST /captains/login`
+
+### Description
+
+This endpoint allows new captains to login by providing their email and password.
+
+### Request Body
+
+The request should be sent as a JSON object with the following structure:
+
+| Field      | Type   | Required | Description                          |
+| ---------- | ------ | -------- | ------------------------------------ |
+| `email`    | String | Yes      | A valid email address.               |
+| `password` | String | Yes      | Password with at least 6 characters. |
+
+### Example Request Body
+
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "securepassword"
+}
+```
+
+### Example Response Body
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzVmNDBmMjdmMThhZjU2OGI1MjcyYzEiLCJpYXQiOjE3MzQyOTcwODUsImV4cCI6MTczNDM4MzQ4NX0.0yf9sC5rhkmcrHsZAb1wyWKybCJk_zFSkaJlUTgmS1I",
+  "captain": {
+    "fullname": {
+      "firstname": "test_captain_firstname",
+      "lastname": "test_captain_lastname"
+    },
+    "vehicle": {
+      "color": "red",
+      "plate": "MP 04 XY 6204",
+      "capacity": 3,
+      "vehicleType": "car"
+    },
+    "_id": "675f40f27f18af568b5272c1",
+    "email": "test_email2@gmail.com",
+    "password": "$2b$10$FczFAZ5sGMr/g/0T3xyyGOXmX9CFF/63xou/.HcoCRiROlES5zqTa",
+    "status": "inactive",
+    "__v": 0
+  }
+}
+```
+
+## Profile Captain
+
+### Endpoint
+
+`GET /captains/profile`
+
+### Description
+
+This endpoint allows existing Captains to view their profile.
+
+### Authentication
+
+Require a valid JWT Token in the Authorization header:
+
+`Authorization : Bearer <token>`
+
+### Example Response Body
+
+```json
+{
+  "fullname": {
+    "firstname": "test_captain_firstname",
+    "lastname": "test_captain_lastname"
+  },
+  "vehicle": {
+    "color": "red",
+    "plate": "MP 04 XY 6204",
+    "capacity": 3,
+    "vehicleType": "car"
+  },
+  "_id": "675f40f27f18af568b5272c1",
+  "email": "test_email2@gmail.com",
+  "status": "inactive",
+  "__v": 0
+}
+```
+
+## Logout User
+
+### Endpoint
+
+`GET /captains/logout`
+
+### Description
+
+This endpoint allows existing captains to logout.
+
+### Authentication
+
+Require a valid JWT Token in the Authorization header:
+
+`Authorization : Bearer <token>`
+
+### Example Response Body
+
+```json
+{
+  "message": "Logged out successfully",
+  "message": "Unauthorized"
 }
 ```
