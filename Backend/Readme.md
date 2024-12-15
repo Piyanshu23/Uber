@@ -8,7 +8,7 @@ This document provides details about the User API endpoints, models, and methods
 2. [Login User](#Login-User)
 3. [Profile User](#Profile-User)
 4. [Logout User](#Logout-User)
-5. [Register Captain] (#Register-Captain)
+5. [Register Captain](#Register-captain)
 
 ---
 
