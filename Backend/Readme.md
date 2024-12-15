@@ -8,6 +8,7 @@ This document provides details about the User API endpoints, models, and methods
 2. [Login User](#Login-User)
 3. [Profile User](#Profile-User)
 4. [Logout User](#Logout-User)
+5. [Register Captain] (#Register-Captain)
 
 ---
 
@@ -114,7 +115,7 @@ The request should be sent as a JSON object with the following structure:
 
 ### Endpoint
 
-`POST /users/profile`
+`GET /users/profile`
 
 ### Description
 
@@ -144,7 +145,7 @@ Require a valid JWT Token in the Authorization header:
 
 ### Endpoint
 
-`POST /users/logout`
+`GET /users/logout`
 
 ### Description
 
@@ -162,5 +163,76 @@ Require a valid JWT Token in the Authorization header:
 {
   "message": "Logged out successfully",
   "message": "Unauthorized"
+}
+```
+
+## Register Captain
+
+### Endpoint
+
+`POST /captains/register`
+
+### Description
+
+This endpoint allows new captain/driver to register by providing their first name, last name, email,password,vehicle color,vehicle plate, vehicle capacity, vehicle type.
+
+### Request Body
+
+The request should be sent as a JSON object with the following structure:
+
+| Field                | Type    | Required | Description                                     |
+| -------------------- | ------- | -------- | ----------------------------------------------- |
+| `fullname`           | Object  | Yes      | Contains `firstname` and `lastname`.            |
+| `fullname.firstname` | String  | Yes      | User's first name (min 3 characters).           |
+| `fullname.lastname`  | String  | No       | User's last name (min 3 characters).            |
+| `email`              | String  | Yes      | A valid email address.                          |
+| `password`           | String  | Yes      | Password with at least 6 characters.            |
+| `vehicle`            | Object  | Yes      | Contains `color`,`plate`,`capacity` and `type`. |
+| `vehicle.color`      | String  | Yes      | Vehicle's colour name (min 3 characters).       |
+| `vehicle.plate`      | String  | Yes      | Vehicle's plate number (min 3 characters).      |
+| `vehicle.capacity`   | Integer | Yes      | Vehicle's capacity (min 1).                     |
+| `vehicle.type`       | Enum    | Yes      | Vehicle's type(car,auto,motorcycle)             |
+
+### Example Request Body
+
+```json
+{
+  "fullname": {
+    "firstname": "test_captain_firstname",
+    "lastname": "test_captain_lastname"
+  },
+  "email": "test_email@gmail.com",
+  "password": "test_captain",
+  "vehicle": {
+    "color": "red",
+    "plate": "MP 04 XY 6204",
+    "capacity": 3,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Example Response Body
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzVmNDBmMjdmMThhZjU2OGI1MjcyYzEiLCJpYXQiOjE3MzQyOTU3OTQsImV4cCI6MTczNDM4MjE5NH0.ccFIuZtTDQZ75g186mw1LAKDFSTlZotPaBis4xxAHsA",
+  "captain": {
+    "fullname": {
+      "firstname": "test_captain_firstname",
+      "lastname": "test_captain_lastname"
+    },
+    "email": "test_email2@gmail.com",
+    "password": "$2b$10$FczFAZ5sGMr/g/0T3xyyGOXmX9CFF/63xou/.HcoCRiROlES5zqTa",
+    "status": "inactive",
+    "vehicle": {
+      "color": "red",
+      "plate": "MP 04 XY 6204",
+      "capacity": 3,
+      "vehicleType": "car"
+    },
+    "_id": "675f40f27f18af568b5272c1",
+    "__v": 0
+  }
 }
 ```
